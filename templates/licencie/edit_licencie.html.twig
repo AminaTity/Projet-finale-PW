@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un licencié{% endblock %}
+
+{% block body %}
+<h1>Modifier le licencié | {{ licencie.id }}. {{ licencie.nom }} {{ licencie.prenom }}</h1>
+<a href="{{ path('app_licencie') }}" class="btn btn-primary" role="button">Retour à la liste des licenciés</a>
+    {{ form_start(form) }}
+    {{ include('licencie/_form.html.twig') }}
+    <button class="btn btn-primary">
+        Modifier
+    </button>
+    {{ form_end(form) }}
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un éducateur{% endblock %}
+
+{% block body %}
+<h1>Ajouter un éducateur</h1>
+<a href="{{ path('app_educateur') }}" class="btn btn-primary" role="button">Retour à la liste des éducateurs</a>
+{% if field_choices(form.licencie) is empty %}
+    <p><b>Ajoutez un licencié avant d'ajouter un éducateur</b><p>
+    <a href="{{ path('add_licencie') }}">Ajouter un licencié</a>
+{% else %}
+    {{ form_start(form) }}
+    {{ include('educateur/_form.html.twig') }}
+    <button class="btn btn-primary">
+        Ajouter
+    </button>
+    {{ form_end(form) }}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un licencié{% endblock %}
+
+{% block body %}
+<h1>Ajouter un licencié</h1>
+<p><a href="{{ path('app_licencie') }}" class="btn btn-primary" role="button">Retour à la liste des licenciés</a></p>
+{% if field_choices(form.categorie) is empty %}
+    <p><b>Ajoutez une catégorie avant d'ajouter un licencié</b><p>
+    <a href="{{ path('add_categorie') }}">Ajouter une catégorie</a>
+{% elseif field_choices(form.contact) is empty %}
+    <p><b>Ajoutez un contact avant d'ajouter un licencié</b><p>
+    <a href="{{ path('add_contact') }}">Ajouter un contact</a>
+{% else %}
+    {{ form_start(form) }}
+    {{ include('licencie/_form.html.twig') }}
+    <button class="btn btn-primary">
+        Ajouter
+    </button>
+    {{ form_end(form) }}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mail contact{% endblock %}
+
+{% block body %}
+<h1>Détails du mail n°{{ mailContact.id }}</h1>
+<a href="{{ path('app_mail_contact', {'id': categorie.id}) }}" class="btn btn-primary" role="button">Retour à la liste des mails de la catégorie {{ categorie.code }} : "{{ categorie.nom }}"</a>
+<div class="mt-3">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Objet : {{ mailContact.objet }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+                {{mailContact.educateur.email}} - 
+                {{ mailContact.dateEnvoi|format_datetime('short', 'short', locale='fr') }}
+            </h6>
+            <p class="card-text">{{ mailContact.message }}</p>
+        </div>
+    </div>
+</div>
+<div class="mt-3">
+    <div class="alert alert-primary" role="alert">
+        <b>Envoyé aux contacts :</b>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Email</th>
+            <th>Téléphone</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for contact in contacts %}
+            <tr>
+                <td>{{ contact.id }}</td>
+                <td>{{ contact.nom }}</td>
+                <td>{{ contact.prenom }}</td>
+                <td>{{ contact.email }}</td>
+                <td>{{ contact.tel }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="alert alert-primary" role="alert">
+  <b>Mail concernant les catégories :</b>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Code</th>
+            <th>Nom</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for categorie in mailContact.categories %}
+            <tr>
+                <td>{{ categorie.id }}</td>
+                <td>{{ categorie.code }}</td>
+                <td>{{ categorie.nom }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

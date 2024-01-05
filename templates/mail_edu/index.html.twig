@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mails éducateurs{% endblock %}
+
+{% block body %}
+<h1>
+    {% if modeEnvoi %}
+        Mails éducateurs envoyés
+    {% else %}
+        Mails éducateurs reçus
+    {% endif %}
+</h1>
+<a href="{{ path('app_educateur') }}" class="btn btn-primary" role="button">Retour à la liste des éducateurs</a>
+{% if mailEdus|length > 0 %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Détails</th>
+                <th>Date</th>
+                <th>Objet</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mailEdu in mailEdus %}
+                <tr>
+                    <td>{{ mailEdu.id }}</td>
+                    <td><a href="{{ path('details_mail_edu', {'id': mailEdu.id}) }}">Voir</a></td>
+                    <td>{{ mailEdu.dateEnvoi|format_datetime('short', 'short', locale='fr') }}</td>
+                    <td>{{ mailEdu.objet }}</td>
+                    <td><a href="{{ path('delete_mail_edu', {'id': mailEdu.id}) }}" onClick="return confirm('Vous allez supprimer le mail n°{{ mailEdu.id }}')">Supprimer</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>
+        {% if modeEnvoi %}
+            Aucun mail éducateur envoyé !
+        {% else %}
+            Aucun mail éducateur reçu !
+        {% endif %}
+    </p>
+{% endif %}
+
+{% endblock %}

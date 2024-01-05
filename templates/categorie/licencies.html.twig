@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des licenciés{% endblock %}
+
+{% block body %}
+<h1>Liste des licenciés de la catégorie <i>{{ categorie.id }}. {{ categorie.code }}</i></h1>
+{% if delete %}
+    <div class="alert alert-secondary" role="alert">
+        Vous devez modifier la catégorie de ce(s) licencié(s) avant de supprimer la catégorie <i>{{ categorie.id }}. {{ categorie.code }}</i>
+    </div>
+{% endif %}
+<a href="{{ path('app_categorie') }}" class="btn btn-primary" role="button">Retour à la liste des catégories</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Contact</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for licencie in categorie.licencies %}
+            <tr>
+                <td>{{ licencie.id }}</td>
+                <td>{{ licencie.nom }}</td>
+                <td>{{ licencie.prenom }}</td>
+                <td>
+                    {% if licencie.contact is null %}
+                        Aucun contact !
+                    {% else %}
+                        {{ licencie.contact.id }}. {{ licencie.contact.nom }} {{ licencie.contact.prenom }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <a href="{{ path('edit_licencie', {'id': licencie.id}) }}">Modifier</a>
+                        <a href="{{ path('delete_licencie', {'id': licencie.id}) }}" onClick="return confirm('Vous allez supprimer le licencié {{ licencie.id }}. {{ licencie.nom }} {{ licencie.prenom }}')">Supprimer</a>
+                    {% else %}
+                        Vous devez avoir les droits d'admin
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

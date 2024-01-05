@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mail éducateur{% endblock %}
+
+{% block body %}
+<h1>Envoyer un mail éducateur</h1>
+<a href="{{ path('app_educateur') }}" class="btn btn-primary" role="button">Retour à la liste des éducateurs</a>
+{{ form_start(form) }}
+{{ include('mail_edu/_form.html.twig') }}
+<button class="btn btn-primary">
+    Envoyer
+</button>
+{{ form_end(form) }}
+{% endblock %}

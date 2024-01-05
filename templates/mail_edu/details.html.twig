@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mail éducateur{% endblock %}
+
+{% block body %}
+<h1>Détails du mail n°{{ mailEdu.id }}</h1>
+<a href="{{ path('app_mail_edu') }}" class="btn btn-primary" role="button">Retour à la liste des mails éducateurs</a>
+<div class="mt-3">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Objet : {{ mailEdu.objet }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+                {{mailEdu.educateur.email}} - 
+                {{ mailEdu.dateEnvoi|format_datetime('short', 'short', locale='fr') }}
+            </h6>
+            <p class="card-text">{{ mailEdu.message }}</p>
+        </div>
+    </div>
+</div>
+<div class="mt-3">
+    <div class="alert alert-primary" role="alert">
+        <b>Envoyé à :</b>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for educateur in mailEdu.educateurs %}
+            <tr>
+                <td>{{ educateur.email }}</td>
+                <td>{{ educateur.licencie.nom }}</td>
+                <td>{{ educateur.licencie.prenom }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

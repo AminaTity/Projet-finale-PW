@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mail Contact{% endblock %}
+
+{% block body %}
+<h1>Envoyer un mail aux contacts d'une ou plusieurs catégories</h1>
+<a href="{{ path('app_categorie') }}" class="btn btn-primary" role="button">Retour à la liste des catégories</a>
+{{ form_start(form) }}
+{{ include('mail_contact/_form.html.twig') }}
+<button class="btn btn-primary">
+    Envoyer
+</button>
+{{ form_end(form) }}
+{% endblock %}

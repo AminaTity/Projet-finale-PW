@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des contacts{% endblock %}
+
+{% block body %}
+<h1>Liste des contacts</h1>
+{% if is_granted("ROLE_ADMIN") %}
+    <a href="{{ path('add_contact') }}" class="btn btn-primary" role="button">Ajouter un contact</a>
+{% endif %}
+{% if contacts|length > 0 %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+                <th>Télephone</th>
+                <th>Licencié(s)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contact in contacts %}
+                <tr>
+                    <td>{{ contact.id }}</td>
+                    <td>{{ contact.nom }}</td>
+                    <td>{{ contact.prenom }}</td>
+                    <td>{{ contact.email }}</td>
+                    <td>{{ contact.tel }}</td>
+                    {% if contact.licencies is empty %}
+                        <td>Aucun licencié !</td>
+                    {% else %}
+                        <td><a href="{{ path('licencies_contact', {'id': contact.id}) }}">Voir</a></td>
+                    {% endif %}
+                    <td>
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <a href="{{ path('edit_contact', {'id': contact.id}) }}">Modifier</a>
+                            <a href="{{ path('delete_contact', {'id': contact.id}) }}" onClick="return confirm('Vous allez supprimer le contact {{ contact.id }}. {{ contact.nom }} {{ contact.prenom }}')">Supprimer</a>
+                        {% else %}
+                            Vous devez avoir les droits d'admin
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Aucun contact n'est enregistré dans la base de données !</p>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des éducateurs{% endblock %}
+
+{% block body %}
+<h1>Liste des éducateurs</h1>
+{% if is_granted("ROLE_ADMIN") %}
+    <a href="{{ path('add_educateur') }}" class="btn btn-primary" role="button">Ajouter un éducateur</a>
+{% endif %}
+{% if educateurs|length > 0 %}
+    <a href="{{ path('add_mail_edu') }}" class="btn btn-primary" role="button">Envoyer un mail éducateur</a>
+    <a href="{{ path('app_mail_edu', {'id': app.user.id}) }}" class="btn btn-light" role="button">Mail(s) envoyé(s)</a>
+    <a href="{{ path('view_mail_edu', {'id': app.user.id}) }}" class="btn btn-light" role="button">Mail(s) reçu(s)</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>ID Licencié</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+                <th>Statut</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for educateur in educateurs %}
+                <tr>
+                    <td>{{ educateur.id }}</td>
+                    <td>{{ educateur.licencie.id }}</td>
+                    <td>{{ educateur.licencie.nom }}</td>
+                    <td>{{ educateur.licencie.prenom }}</td>
+                    <td>{{ educateur.email }}</td>
+                    <td>
+                        {% if "ROLE_ADMIN" in educateur.roles %}
+                            ROLE_ADMIN
+                        {% else %}
+                            ROLE_USER
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <a href="{{ path('edit_educateur', {'id': educateur.id}) }}">Modifier</a>
+                            <a href="{{ path('delete_educateur', {'id': educateur.id}) }}" onClick="return confirm('Vous allez supprimer l\'éducateur {{ educateur.id }}. {{ educateur.licencie.nom }} {{ educateur.licencie.prenom }}')">Supprimer</a>
+                        {% else %}
+                            Vous devez avoir les droits d'admin
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Aucun Éducateur n'est enregistré dans la base de données !</p>
+{% endif %}
+
+{% endblock %}

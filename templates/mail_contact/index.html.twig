@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mails Contacts{% endblock %}
+
+{% block body %}
+<h1>Mails de la catégorie {{ categorie.code }} : "{{ categorie.nom }}"</h1>
+<a href="{{ path('app_categorie') }}" class="btn btn-primary" role="button">Retour à la liste des catégorie</a>
+{% if mailContacts|length > 0 %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Détails</th>
+                <th>Date</th>
+                <th>Objet</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mailContact in mailContacts %}
+                <tr>
+                    <td>{{ mailContact.id }}</td>
+                    <td><a href="{{ path('details_mail_contact', {'mailContact': mailContact.id, 'categorie': categorie.id}) }}">Voir</a></td>
+                    <td>{{ mailContact.dateEnvoi|format_datetime('short', 'short', locale='fr') }}</td>
+                    <td>{{ mailContact.objet }}</td>
+                    <td><a href="{{ path('delete_mail_contact', {'mailContact': mailContact.id, 'categorie': categorie.id}) }}" onClick="return confirm('Vous allez supprimer le mail n°{{ mailContact.id }}')">Supprimer</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Aucun mail envoyé !</p>
+{% endif %}
+
+{% endblock %}

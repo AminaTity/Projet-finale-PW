@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des catégories{% endblock %}
+
+{% block body %}
+<h1>Liste des catégories</h1>
+{% if is_granted("ROLE_ADMIN") %}
+    <a href="{{ path('add_categorie') }}" class="btn btn-primary" role="button">Ajouter une catégorie</a>
+{% endif %}
+{% if categories|length > 0 %}
+    <a href="{{ path('add_mail_contact') }}" class="btn btn-primary" role="button">Envoyer un mail</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Code</th>
+                <th>Nom</th>
+                <th>Licencié(s)</th>
+                <th>Contact(s)</th>
+                <th>Mail(s)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for categorie in categories %}
+                <tr>
+                    <td>{{ categorie.id }}</td>
+                    <td>{{ categorie.code }}</td>
+                    <td>{{ categorie.nom }}</td>
+                    {% if categorie.licencies is empty %}
+                        <td>Aucun licencié !</td>
+                        <td>Auncun contact !</td>
+                    {% else %}
+                        <td><a href="{{ path('licencies_categorie', {'id': categorie.id}) }}">Voir</a></td>
+                        <td><a href="{{ path('contacts_categorie', {'id': categorie.id}) }}">Voir</a></td>
+                    {% endif %}
+                    <td>
+                    {% if categorie.mailContacts is empty %}
+                        Vide
+                    {% else %}
+                        <a href="{{ path('app_mail_contact', {'id': categorie.id}) }}">Voir</a>
+                    {% endif %}
+                    </td>
+                    <td>
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <a href="{{ path('edit_categorie', {'id': categorie.id}) }}">Modifier</a>
+                            <a href="{{ path('delete_categorie', {'id': categorie.id}) }}" onClick="return confirm('Vous allez supprimer la catégorie {{ categorie.id }} : {{ categorie.code }}')">Supprimer</a>
+                        {% else %}
+                            Vous devez avoir les droits d'admin
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Aucune catégorie n'est enregistrée dans la base de données !</p>
+{% endif %}
+
+{% endblock %}

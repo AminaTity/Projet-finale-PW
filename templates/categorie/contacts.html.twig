@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des contacts{% endblock %}
+
+{% block body %}
+<h1>Liste des contacts de la catégorie {{ categorie.id }}. {{ categorie.code }}</h1>
+<a href="{{ path('app_categorie') }}" class="btn btn-primary" role="button">Retour à la liste des catégories</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID du contact</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Email</th>
+            <th>Télephone</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for contact in contacts %}
+            <tr>
+                <td>{{ contact.id }}</td>
+                <td>{{ contact.nom }}</td>
+                <td>{{ contact.prenom }}</td>
+                <td>{{ contact.email }}</td>
+                <td>{{ contact.tel }}</td>
+                <td>
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <a href="{{ path('edit_contact', {'id': contact.id}) }}">Modifier</a>
+                        <a href="{{ path('delete_contact', {'id': contact.id}) }}" onClick="return confirm('Vous allez supprimer le contact {{ contact.id }}. {{ contact.nom }} {{ contact.prenom }}')">Supprimer</a>
+                    {% else %}
+                        Vous devez avoir les droits d'admin
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

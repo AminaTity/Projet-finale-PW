@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier une catégorie{% endblock %}
+
+{% block body %}
+<h1>Modifier le contact | {{ contact.id }}. {{ contact.nom }} {{ contact.prenom }}</h1>
+<a href="{{ path('app_contact') }}" class="btn btn-primary" role="button">Retour à la liste des contacts</a>
+    {{ form_start(form) }}
+    {{ include('contact/_form.html.twig') }}
+    <button class="btn btn-primary">
+        Modifier
+    </button>
+    {{ form_end(form) }}
+
+{% endblock %}

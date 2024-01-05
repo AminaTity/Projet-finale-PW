@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des licenciés{% endblock %}
+
+{% block body %}
+<h1>Liste des licenciés</h1>
+{% if is_granted("ROLE_ADMIN") %}
+    <a href="{{ path('add_licencie') }}" class="btn btn-primary" role="button">Ajouter un licenciés</a>
+{% endif %}
+{% if licencies|length > 0 %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Contact</th>
+                <th>Catégorie</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for licencie in licencies %}
+                <tr>
+                    <td>{{ licencie.id }}</td>
+                    <td>{{ licencie.nom }}</td>
+                    <td>{{ licencie.prenom }}</td>
+                    <td>{{ licencie.contact.id }}. {{ licencie.contact.nom }} {{ licencie.contact.prenom }}</td>
+                    <td>{{ licencie.categorie.id }}. {{ licencie.categorie.code }}</td>
+                    <td>
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <a href="{{ path('edit_licencie', {'id': licencie.id}) }}">Modifier</a>
+                            <a href="{{ path('delete_licencie', {'id': licencie.id}) }}" onClick="return confirm('Vous allez supprimer le licencié {{ licencie.id }}. {{ licencie.nom }} {{ licencie.prenom }}')">Supprimer</a>
+                        {% else %}
+                            Vous devez avoir les droits d'admin
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Aucun licencié n'est enregistré dans la base de données !</p>
+{% endif %}
+
+{% endblock %}

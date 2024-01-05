@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" id="licencie" href="{{ path('app_licencie') }}">Licenciés</a>
+                <a class="nav-item nav-link" id="educteur" href="{{ path('app_educateur') }}">Éducateurs</a>
+                <a class="nav-item nav-link" id="categorie" href="{{ path('app_categorie') }}">Catégories</a>
+                <a class="nav-item nav-link" id="contact" href="{{ path('app_contact') }}">Contacts</a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            {% if app.user %}
+                <a class="nav-item nav-link" href="{{ path('app_logout') }}">Déconnecter {{ app.user.userIdentifier }}</a>
+            {% else %}
+                <a class="nav-item nav-link" href="{{ path('app_login') }}">Connexion</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
