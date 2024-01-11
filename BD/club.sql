@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 05 jan. 2024 à 17:37
+-- Généré le : jeu. 11 jan. 2024 à 18:51
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.1.13
 
@@ -30,8 +30,8 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `categorie`;
 CREATE TABLE IF NOT EXISTS `categorie` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nom` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `categorie` (
 --
 
 INSERT INTO `categorie` (`id`, `code`, `nom`) VALUES
-(1, 'M12', 'Moins de 12 ans');
+(1, 'P18', 'plus de 18 ans');
 
 -- --------------------------------------------------------
 
@@ -51,20 +51,19 @@ INSERT INTO `categorie` (`id`, `code`, `nom`) VALUES
 DROP TABLE IF EXISTS `contact`;
 CREATE TABLE IF NOT EXISTS `contact` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `prenom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tel` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nom` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prenom` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tel` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `contact`
 --
 
 INSERT INTO `contact` (`id`, `nom`, `prenom`, `email`, `tel`) VALUES
-(1, 'c', 'c', 'c@c', '0111111111'),
-(2, 'd', 'd', 'd@d', '0111111111');
+(1, 'Con', 'Tact', 'c@t', '0666666666');
 
 -- --------------------------------------------------------
 
@@ -74,7 +73,7 @@ INSERT INTO `contact` (`id`, `nom`, `prenom`, `email`, `tel`) VALUES
 
 DROP TABLE IF EXISTS `doctrine_migration_versions`;
 CREATE TABLE IF NOT EXISTS `doctrine_migration_versions` (
-  `version` varchar(191) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `version` varchar(191) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   `executed_at` datetime DEFAULT NULL,
   `execution_time` int DEFAULT NULL,
   PRIMARY KEY (`version`)
@@ -85,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `doctrine_migration_versions` (
 --
 
 INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
-('DoctrineMigrations\\Version20240105171423', '2024-01-05 17:14:30', 1503);
+('DoctrineMigrations\\Version20240111181124', '2024-01-11 18:11:35', 1664);
 
 -- --------------------------------------------------------
 
@@ -97,9 +96,9 @@ DROP TABLE IF EXISTS `educateur`;
 CREATE TABLE IF NOT EXISTS `educateur` (
   `id` int NOT NULL AUTO_INCREMENT,
   `licencie_id` int NOT NULL,
-  `email` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `roles` json NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_763C0122E7927C74` (`email`),
   UNIQUE KEY `UNIQ_763C0122B56DCD74` (`licencie_id`)
@@ -110,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `educateur` (
 --
 
 INSERT INTO `educateur` (`id`, `licencie_id`, `email`, `roles`, `password`) VALUES
-(1, 1, 'l@l', '{\"0\": \"ROLE_ADMIN\"}', '$2y$10$i5W1iJcO.UgR9jvA8KW.c.A1UgNVwxTcLKF0nPPfD9ki.T/ChK/12');
+(1, 1, 'l@l.com', '{\"0\": \"ROLE_ADMIN\"}', '$2y$10$luigTusl2zsFKDlP585Ok.jy0HpaQp1JlORZYHP3FOPaxPmdebd2G');
 
 -- --------------------------------------------------------
 
@@ -123,20 +122,19 @@ CREATE TABLE IF NOT EXISTS `licencie` (
   `id` int NOT NULL AUTO_INCREMENT,
   `categorie_id` int NOT NULL,
   `contact_id` int NOT NULL,
-  `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `prenom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nom` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prenom` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_3B755612BCF5E72D` (`categorie_id`),
   KEY `IDX_3B755612E7A1254A` (`contact_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `licencie`
 --
 
 INSERT INTO `licencie` (`id`, `categorie_id`, `contact_id`, `nom`, `prenom`) VALUES
-(1, 1, 2, 'l', 'l'),
-(2, 1, 2, 't', 't');
+(1, 1, 1, 'Licen', 'Cie');
 
 -- --------------------------------------------------------
 
@@ -149,18 +147,11 @@ CREATE TABLE IF NOT EXISTS `mail_contact` (
   `id` int NOT NULL AUTO_INCREMENT,
   `educateur_id` int NOT NULL,
   `date_envoi` datetime NOT NULL,
-  `objet` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `message` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `objet` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `message` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_96DF67576BFC1A0E` (`educateur_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `mail_contact`
---
-
-INSERT INTO `mail_contact` (`id`, `educateur_id`, `date_envoi`, `objet`, `message`) VALUES
-(1, 1, '2024-01-05 18:24:14', 'cc', 'cc');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -177,13 +168,6 @@ CREATE TABLE IF NOT EXISTS `mail_contact_categorie` (
   KEY `IDX_340E21C3BCF5E72D` (`categorie_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Déchargement des données de la table `mail_contact_categorie`
---
-
-INSERT INTO `mail_contact_categorie` (`mail_contact_id`, `categorie_id`) VALUES
-(1, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -199,13 +183,6 @@ CREATE TABLE IF NOT EXISTS `mail_contact_contact` (
   KEY `IDX_94F6F3BBE7A1254A` (`contact_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Déchargement des données de la table `mail_contact_contact`
---
-
-INSERT INTO `mail_contact_contact` (`mail_contact_id`, `contact_id`) VALUES
-(1, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -217,8 +194,8 @@ CREATE TABLE IF NOT EXISTS `mail_edu` (
   `id` int NOT NULL AUTO_INCREMENT,
   `educateur_id` int NOT NULL,
   `date_envoi` datetime NOT NULL,
-  `objet` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `message` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `objet` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `message` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_8CB8D4A36BFC1A0E` (`educateur_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -247,9 +224,9 @@ CREATE TABLE IF NOT EXISTS `mail_edu_educateur` (
 DROP TABLE IF EXISTS `messenger_messages`;
 CREATE TABLE IF NOT EXISTS `messenger_messages` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `headers` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue_name` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `headers` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue_name` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)',
   `available_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)',
   `delivered_at` datetime DEFAULT NULL COMMENT '(DC2Type:datetime_immutable)',

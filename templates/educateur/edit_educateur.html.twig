@@ -3,7 +3,7 @@
 {% block title %}Modifier un éducateur{% endblock %}
 
 {% block body %}
-<h1>Modifier l'éducateur' | {{ educateur.id }}. {{ educateur.licencie.nom }} {{ educateur.licencie.prenom }}</h1>
+<h1>Modifier l'éducateur | {{ educateur.id }}. {{ educateur.licencie.nom }} {{ educateur.licencie.prenom }}</h1>
 <a href="{{ path('app_educateur') }}" class="btn btn-primary" role="button">Retour à la liste des éducateurs</a>
     {{ form_start(form) }}
     {{ include('educateur/_form.html.twig') }}

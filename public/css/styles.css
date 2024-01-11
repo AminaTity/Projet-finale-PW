@@ -1,0 +1,5 @@
+/* Couleur utilisée pour les liens lorsque la souris passe dessus */
+.navbar-nav > a:hover,
+.navbar-nav > a:focus {
+  color: black;
+}
