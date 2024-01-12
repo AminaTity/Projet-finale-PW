@@ -29,7 +29,7 @@ class Educateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\OneToOne(inversedBy: 'educateur', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'educateur')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Licencie $licencie = null;
 

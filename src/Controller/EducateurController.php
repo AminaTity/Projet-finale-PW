@@ -37,6 +37,15 @@ class EducateurController extends AbstractController
         $form = $this->createForm(EducateurType::class, $educateur);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
+            $roles = $educateur->getRoles();
+            foreach($roles as $role){
+                if ($role == "ROLE_ADMIN"){
+                    $educateur->setRoles(["ROLE_ADMIN"]);
+                    break;
+                } else {
+                    $educateur->setRoles(["ROLE_USER"]);
+                }
+            }
             $this->em->persist($educateur);
             $this->em->flush();
 
@@ -53,6 +62,15 @@ class EducateurController extends AbstractController
         $form = $this->createForm(EducateurType::class, $educateur);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
+            $roles = $educateur->getRoles();
+            foreach($roles as $role){
+                if ($role == "ROLE_ADMIN"){
+                    $educateur->setRoles(["ROLE_ADMIN"]);
+                    break;
+                } else {
+                    $educateur->setRoles(["ROLE_USER"]);
+                }
+            }
             $this->em->flush();
 
             return $this->redirectToRoute('app_educateur');
